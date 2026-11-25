@@ -98,9 +98,15 @@ def energy_charge(tariff: Tariff, kwh: int) -> Decimal:
     if kwh < 0:
         raise ValueError("Consumption must not be negative")
 
+    total = Decimal(0)
+    lower = 0
     for tier in tariff.tiers:
-        if tier.up_to_kwh is None or kwh <= tier.up_to_kwh:
-            return round_eur(Decimal(kwh) * tier.price_per_kwh)
+        upper = kwh if tier.up_to_kwh is None else min(kwh, tier.up_to_kwh)
+        if upper > lower:
+            total += Decimal(upper - lower) * tier.price_per_kwh
+            lower = upper
+        if upper == kwh:
+            return round_eur(total)
 
     raise AssertionError(f"Tariff {tariff.code} has no open-ended tier")
 
