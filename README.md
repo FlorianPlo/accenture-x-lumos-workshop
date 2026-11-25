@@ -52,3 +52,24 @@ Requires Python 3.10+. There are no runtime dependencies.
 1. Read [wiki/Home.md](wiki/Home.md) for the domain.
 2. Read [CONTRIBUTING.md](CONTRIBUTING.md) before changing code.
 3. Open bug reports are in [issues/](issues/).
+
+## Bug Fixing Agent
+
+Bugs are resolved by a Claude Code agent running in GitHub Actions
+([`.github/workflows/claude-bugfix.yml`](.github/workflows/claude-bugfix.yml)).
+
+| How to start it | What happens |
+| --- | --- |
+| Open a GitHub issue (template **Bug report**) | The agent reads the issue, works through the repo context and opens a **draft PR** from `fix/<ticket-id>` |
+| Add the label `agent-fix` to an issue | Re-runs the agent on that issue |
+| Actions → *Bug Fixing Agent* → *Run workflow* with `issues/BUG-….md` | Same, for a bug report file in `issues/` |
+| Comment `@claude …` on an issue or PR | Claude follows up, e.g. on review feedback ([`claude.yml`](.github/workflows/claude.yml)) |
+
+The agent's rules are in [`CLAUDE.md`](CLAUDE.md) and its step-by-step procedure in
+[`.claude/agent/bugfix-workflow.md`](.claude/agent/bugfix-workflow.md). Every PR description
+follows [`.github/pull_request_template.md`](.github/pull_request_template.md) and is the
+agent's reasoning log. A human reviews and merges. CI ([`ci.yml`](.github/workflows/ci.yml))
+runs pytest on every PR. Locally, run the same procedure with `/fix-bug issues/BUG-….md` in Claude Code.
+
+Setup: install the Claude GitHub App on the repo and add the secret `CLAUDE_CODE_OAUTH_TOKEN`
+(created with `claude setup-token`).
