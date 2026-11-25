@@ -2,7 +2,7 @@
 
 | Field | Value |
 | --- | --- |
-| Status | Open |
+| Status | Fixed (pending review) |
 | Priority | High - customer complaint, possible overcharging |
 | Reported by | Customer service |
 | Reported on | 2026-12-02 |
