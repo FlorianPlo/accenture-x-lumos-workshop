@@ -55,3 +55,29 @@ def test_prorated_base_fee_single_day() -> None:
 
 def test_prorated_base_fee_zero_days() -> None:
     assert prorated_base_fee(get_tariff("COMFORT"), 0) == Decimal("0.00")
+
+
+# Regression test for BUG-151
+def test_energy_charge_comfort_charges_higher_price_only_above_limit() -> None:
+    # wiki/Tariffs.md example, 260 kWh:
+    # 250 * 0.2990 = 74.75; 10 * 0.3690 = 3.69; sum = 78.44
+    assert energy_charge(get_tariff("COMFORT"), 260) == Decimal("78.44")
+
+
+# Regression test for BUG-151
+def test_energy_charge_heatpump_three_tiers() -> None:
+    # wiki/Tariffs.md example, 1220 kWh:
+    # 400 * 0.2490 = 99.60; 600 * 0.2790 = 167.40; 220 * 0.3190 = 70.18; sum = 337.18
+    assert energy_charge(get_tariff("HEATPUMP"), 1220) == Decimal("337.18")
+
+
+# Regression test for BUG-151
+def test_energy_charge_heatpump_at_second_tier_boundary() -> None:
+    # 400 * 0.2490 = 99.60; 600 * 0.2790 = 167.40; sum = 267.00
+    assert energy_charge(get_tariff("HEATPUMP"), 1000) == Decimal("267.00")
+
+
+# Regression test for BUG-151
+def test_energy_charge_comfort_one_kwh_above_limit_does_not_jump() -> None:
+    # 250 * 0.2990 = 74.75; 1 * 0.3690 = 0.369; sum = 75.119 -> 75.12
+    assert energy_charge(get_tariff("COMFORT"), 251) == Decimal("75.12")
