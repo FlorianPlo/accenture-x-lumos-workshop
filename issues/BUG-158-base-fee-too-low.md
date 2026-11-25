@@ -2,7 +2,7 @@
 
 | Field | Value |
 | --- | --- |
-| Status | Open |
+| Status | Fixed (pending review) |
 | Priority | Medium - no customer complaints, but revenue impact on every invoice |
 | Reported by | Finance / controlling |
 | Reported on | 2026-12-03 |

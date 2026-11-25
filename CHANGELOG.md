@@ -4,6 +4,7 @@ All notable changes to this project are documented here.
 
 ## Unreleased
 
+- fix: base fee now counts both start and end day as billable, e.g. November = 30 days, 9.76 EUR instead of 29 days, 9.44 EUR (BUG-158)
 - fix: register rollover no longer aborts billing; consumption is computed across the rollover, e.g. 99870 to 00095 = 225 kWh (BUG-142)
 
 ## 1.4.0 - 2026-09-15
