@@ -83,7 +83,7 @@ class BillingPeriod:
     @property
     def days(self) -> int:
         """Number of billable days in the period."""
-        return (self.end - self.start).days
+        return (self.end - self.start).days + 1
 
     def label(self) -> str:
         """Human readable label, e.g. ``"2026-11-01 to 2026-11-30"``."""
