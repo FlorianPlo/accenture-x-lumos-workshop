@@ -4,6 +4,8 @@ All notable changes to this project are documented here.
 
 ## Unreleased
 
+- fix: register rollover no longer aborts billing; consumption is computed across the rollover, e.g. 99870 to 00095 = 225 kWh (BUG-142)
+
 ## 1.4.0 - 2026-09-15
 
 - feat: web UI for billing operations: billing run dashboard and invoice pages (FEAT-121)

@@ -25,6 +25,9 @@ def _validate_reading(meter: Meter, reading: MeterReading) -> None:
 def consumption_kwh(meter: Meter, previous: MeterReading, current: MeterReading) -> int:
     """Compute consumption in kWh between two readings of the same meter.
 
+    A closing reading lower than the opening reading is treated as a register
+    rollover; the result still goes through the plausibility check.
+
     Args:
         meter: The meter both readings belong to.
         previous: The earlier reading (opens the period).
@@ -48,10 +51,8 @@ def consumption_kwh(meter: Meter, previous: MeterReading, current: MeterReading)
 
     delta = current.value - previous.value
     if delta < 0:
-        raise InvalidReadingError(
-            f"Meter {meter.meter_id}: reading decreased from {previous.value} "
-            f"to {current.value}"
-        )
+        # Register rollover (wiki/Meter-Readings.md): 10^digits - opening + closing.
+        delta += 10**meter.digits
 
     elapsed_days = (current.read_on - previous.read_on).days
     if delta > MAX_PLAUSIBLE_KWH_PER_DAY * elapsed_days:
