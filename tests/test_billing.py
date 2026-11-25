@@ -1,4 +1,5 @@
 from datetime import date
+from decimal import Decimal
 
 from tests.conftest import reading
 from wattwise.billing import VAT_RATE, create_invoice
@@ -46,3 +47,13 @@ def test_create_invoice_copies_customer_data(customer, meter, november) -> None:
     assert invoice.customer_id == "C-1"
     assert invoice.tariff_name == "WattWise Basic"
     assert invoice.period == november
+
+
+# Regression test for BUG-158
+def test_create_invoice_base_fee_covers_all_days_of_november(
+    customer: Customer, meter: Meter, november: BillingPeriod
+) -> None:
+    # wiki/Billing-Rules.md: 9.90 * 12 / 365 * 30 = 9.7643... -> 9.76 EUR (30 days)
+    invoice = _invoice(customer, meter, november)
+    assert invoice.lines[0].description == "Base fee (30 days)"
+    assert invoice.lines[0].amount == Decimal("9.76")
