@@ -24,3 +24,13 @@ def test_billing_period_rejects_end_before_start() -> None:
 def test_billing_period_label() -> None:
     period = BillingPeriod(date(2026, 11, 1), date(2026, 11, 30))
     assert period.label() == "2026-11-01 to 2026-11-30"
+
+
+# Regression test for BUG-158
+def test_billing_period_days_counts_start_and_end() -> None:
+    # wiki/Billing-Rules.md: both start and end are billable days (end - start + 1)
+    # Nov: 1..30 = 30 days; Dec: 1..31 = 31 days; Feb 2027: 1..28 = 28 days
+    assert BillingPeriod(date(2026, 11, 1), date(2026, 11, 30)).days == 30
+    assert BillingPeriod(date(2026, 12, 1), date(2026, 12, 31)).days == 31
+    assert BillingPeriod(date(2027, 2, 1), date(2027, 2, 28)).days == 28
+    assert BillingPeriod(date(2026, 11, 5), date(2026, 11, 5)).days == 1
