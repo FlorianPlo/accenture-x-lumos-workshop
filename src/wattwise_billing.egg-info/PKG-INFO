@@ -1,0 +1,7 @@
+Metadata-Version: 2.4
+Name: wattwise-billing
+Version: 1.4.0
+Summary: Monthly electricity invoicing for WattWise household customers
+Requires-Python: >=3.10
+Provides-Extra: dev
+Requires-Dist: pytest>=8; extra == "dev"

@@ -1,0 +1,16 @@
+{
+  "customers": [
+    {"customer_id": "C-1001", "name": "Anna Becker",   "meter_id": "M-20001", "tariff_code": "BASIC"},
+    {"customer_id": "C-1002", "name": "Jonas Schmidt", "meter_id": "M-20002", "tariff_code": "COMFORT"},
+    {"customer_id": "C-1003", "name": "Lea Wagner",    "meter_id": "M-20003", "tariff_code": "HEATPUMP"},
+    {"customer_id": "C-1004", "name": "Paul Hoffmann", "meter_id": "M-20004", "tariff_code": "BASIC"},
+    {"customer_id": "C-1005", "name": "Mia Fischer",   "meter_id": "M-20005", "tariff_code": "COMFORT"}
+  ],
+  "meters": [
+    {"meter_id": "M-20001", "digits": 5},
+    {"meter_id": "M-20002", "digits": 5},
+    {"meter_id": "M-20003", "digits": 6},
+    {"meter_id": "M-20004", "digits": 5},
+    {"meter_id": "M-20005", "digits": 6}
+  ]
+}
