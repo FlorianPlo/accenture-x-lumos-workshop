@@ -2,7 +2,7 @@
 
 | Field | Value |
 | --- | --- |
-| Status | Open |
+| Status | Fixed (pending review) |
 | Priority | **Critical** - customer cannot be invoiced, batch run aborts |
 | Reported by | Billing operations (on-call) |
 | Reported on | 2026-12-01 |
